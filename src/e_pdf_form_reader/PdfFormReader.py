@@ -6,7 +6,7 @@ from pprint import pformat
 
 from .DataProcessor import DataProcessor
 
-class Pdf:
+class PdfFormReader:
     """
     Represents a PDF file and provides methods to extract text with bounding boxes.
     """

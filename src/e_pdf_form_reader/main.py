@@ -3,13 +3,13 @@ import logging
 import os
 from .Config import Config
 from .DataProcessor import DataProcessor
-from .Pdf import Pdf
+from .PdfFormReader import PdfFormReader
 
 logging.basicConfig(level=logging.INFO)
 
 
 def evaluate_command(args):
-    pdf = Pdf(args.pdf_file)
+    pdf = PdfFormReader(args.pdf_file)
     pdf_content = pdf.boxes
     DataProcessor.save_to_json(pdf_content, args.output or os.path.splitext(args.pdf_file)[0] + '-bbox.json')
     logging.info(f"Bounding box results written to '{args.output or os.path.splitext(args.pdf_file)[0] + '-bbox.json'}'.")
@@ -22,7 +22,7 @@ def read_command(args):
         logging.error(f"Error: The configuration file '{args.config}' does not exist.")
         exit(1)
 
-    pdf = Pdf(args.pdf_file)
+    pdf = PdfFormReader(args.pdf_file)
     cfg = Config(args.config)
     cfg.load_config()
     cfg.create_field_model()
