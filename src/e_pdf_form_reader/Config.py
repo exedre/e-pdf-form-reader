@@ -288,7 +288,7 @@ class Config:
             elif kind == "table":
                 data['fields'] = self.create_table_fields(section, data)
             else:
-                raise ValueError(f"Kind mismatch ({kind}) for section  '{section}': {e}")                
+                raise ValueError(f"Kind mismatch ({kind}) for section  '{section}'")                
             info.append(data)
         self.field_model = sorted(info, key=lambda data: tuple(map(int, data['up-left'].split(','))))
         if debug:

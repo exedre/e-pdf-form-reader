@@ -137,7 +137,6 @@ class PdfFormReader:
                     box = self.get(page, bbox, kind=field['kind'])
                 except Exception as e:
                     logging.error(f"Error occurred while processing field: {field['name']}: {e}")
-                    result['load'] = None                    
                 if box['load']:
                     if start_at and re.match(f"{group['group']}\..*\.{start_at[0]}", name) and re.match(start_at[1], box['load']):
                         active = True
@@ -151,7 +150,6 @@ class PdfFormReader:
                     group = DataProcessor.cast(group, box_line)
                 except Exception as e:
                     logging.error(f"Error occurred while processing group: {group['group']}: {e}")
-                    result['load'] = None                    
                 results.extend(group['fields'])
         if debug:
             self.save_results_to_file(results)
