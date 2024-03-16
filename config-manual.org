@@ -1,0 +1,132 @@
+* Comprehensive Configuration File Manual
+
+** Introduction
+
+The configuration file serves as a blueprint for extracting specific data structures from PDF documents. Each section of the file corresponds to the definition of a particular data structure to be extracted. This manual provides a detailed guide on how to create and configure the configuration file to accurately extract the desired data.
+
+** 1. Basic Structure 
+
+The configuration file follows the INI (Initialization) format, consisting of sections denoted by square brackets (`[]`) and key-value pairs separated by equals sign (`=`). Each section defines a particular data structure to be extracted from the PDF.
+
+** 2. Single Value Extraction 
+
+To extract a single value, specify the following keys within a section:
+
+   - `kind`: Set to `single` to indicate single value extraction.
+   - `group`: Assign a group name to categorize the extracted value.
+   - `page`: Page number of the PDF where the value is located.
+   - `up-left`: Coordinates of the top-left corner of the bounding box.
+   - `down-right`: Coordinates of the bottom-right corner of the bounding box.
+   - `result`: Specifies the result format (`str`, `int`, `float`, etc.).
+
+Example:
+
+#+BEGIN_SRC ini
+[EmployeeName]
+kind=single
+group=Employee
+page=1
+up-left=100,100
+down-right=300,120
+result=str
+#+END_SRC
+
+** 3. Multiple Values as Dictionary 
+
+When multiple values need to be extracted and returned as a dictionary, utilize the `dict` result format. Define rows and columns for table-like structures.
+
+Example:
+
+#+BEGIN_SRC ini
+[EmployeeDetails]
+kind=table
+group=Employee
+page=1
+up-left=50,150
+down-right=400,250
+rows=Name,ID
+columns=Address,Phone
+result=dict
+#+END_SRC
+
+** 4. Table Extraction 
+
+For structured data arranged in tables, specify the `table` kind. Define rows and columns to extract data accurately.
+
+Example:
+
+#+BEGIN_SRC ini
+[SalesData]
+kind=table
+group=Sales
+page=2
+up-left=80,100
+down-right=500,300
+rows=Product1,Product2
+columns=Quantity,Price
+result=dict
+#+END_SRC
+
+** 5. Row Extraction 
+
+To read data row-wise, use the `row` kind. Specify the divisions within the row to extract values.
+
+Example:
+
+#+BEGIN_SRC ini
+[CustomerFeedback]
+kind=row
+group=Feedback
+page=3
+up-left=50,150
+down-right=400,200
+rows=Review1,Review2
+columns=Rating :100: Comment
+result=dict
+#+END_SRC
+
+** 6. Advanced Options 
+
+*** Description
+
+Use the `description` key to provide a brief description of the section.
+
+Example:
+
+#+BEGIN_SRC ini
+[EmployeeDetails]
+description=Contains information about employees.
+#+END_SRC
+
+*** Start and Stop Conditions
+
+Define conditions to start or stop reading data based on specific patterns or values.
+
+Example:
+
+#+BEGIN_SRC ini
+[EmployeeDetails]
+start-at=ID==001
+stop-at=ID==100
+#+END_SRC
+
+*** Custom Cast
+
+Specify a custom casting format for date fields using the `cast` key.
+
+Example:
+
+#+BEGIN_SRC ini
+[DateOfBirth]
+kind=single
+group=Employee
+page=1
+up-left=200,200
+down-right=300,220
+result=str
+cast=date %%Y-%%m-%%d
+#+END_SRC
+
+** Conclusion
+
+With this comprehensive manual, you should be able to effectively configure the configuration file to extract various types of data structures from PDF documents. Experiment with different options and formats to tailor the extraction process to your specific requirements.
