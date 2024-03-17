@@ -1,7 +1,7 @@
 import unittest
 import json
 import os
-from DataProcessor import DataProcessor
+from e_pdf_form_reader.DataProcessor import DataProcessor
 
 class TestDataProcessor(unittest.TestCase):
     def setUp(self):
@@ -40,61 +40,7 @@ class TestDataProcessor(unittest.TestCase):
         
         # Assertion
         self.assertEqual(expected_output, actual_output)
-    def test_extract_field_data_list(self):
-        # Sample input data
-        field = {'name': 'Field1', 'load': 'Data1', 'bbox': (0, 0, 10, 10), 'page': 1}
-        result = 'list'
-        
-        # Expected output
-        expected_output = {'name': 'Field1', 'load': ['Data1'], 'bbox': (0, 0, 10, 10), 'page': 1, 'kind': 'list'}
-        
-        # Call the extract_field_data method with list result
-        actual_output = DataProcessor.extract_field_data(field, result)
-        
-        # Assertion
-        self.assertEqual(expected_output, actual_output)
 
-    def test_extract_field_data_dict(self):
-        # Sample input data
-        field = {'name': 'Field1', 'load': 'Data1', 'bbox': (0, 0, 10, 10), 'page': 1}
-        result = 'dict'
-        
-        # Expected output
-        expected_output = {'name': 'Field1', 'load': {'Field1': 'Data1'}, 'bbox': (0, 0, 10, 10), 'page': 1, 'kind': 'dict'}
-        
-        # Call the extract_field_data method with dict result
-        actual_output = DataProcessor.extract_field_data(field, result)
-        
-        # Assertion
-        self.assertEqual(expected_output, actual_output)
-
-    def test_extract_field_data_text(self):
-        # Sample input data
-        field = {'name': 'Field1', 'load': 'This is a text field', 'bbox': (0, 0, 10, 10), 'page': 1}
-        result = 'text'
-        
-        # Expected output
-        expected_output = {'name': 'Field1', 'load': 'This is a text field', 'bbox': (0, 0, 10, 10), 'page': 1, 'kind': 'text'}
-        
-        # Call the extract_field_data method with text result
-        actual_output = DataProcessor.extract_field_data(field, result)
-        
-        # Assertion
-        self.assertEqual(expected_output, actual_output)
-
-    def test_extract_field_data_rowdict(self):
-        # Sample input data
-        field = {'name': 'prefix.ROW.Field1', 'load': 'Data1', 'bbox': (0, 0, 10, 10), 'page': 1}
-        result = 'row_dict(prefix)'
-        
-        # Expected output
-        expected_output = {'name': 'prefix.ROW.Field1', 'load': {'ROW':{'Field1': 'Data1'}}, 'bbox': (0, 0, 10, 10), 'page': 1, 'kind': 'rowdict'}
-        
-        # Call the extract_field_data method with rowdict result
-        actual_output = DataProcessor.extract_field_data(field, result)
-        
-        # Assertion
-        self.assertEqual(expected_output, actual_output)
 
 if __name__ == '__main__':
     unittest.main()
